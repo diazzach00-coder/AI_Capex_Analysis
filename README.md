@@ -37,7 +37,9 @@ pip install -r requirements.txt
 jupyter nbconvert --to notebook --execute --inplace ai_money_loop.ipynb
 ```
 
-Or run the scripts in order: `pull_data.py`, `figures.py`, `money_loop.py`, `btos.py`. `build_notebook.py` regenerates the notebook from the scripts, and `build_dashboard.py` regenerates `docs/index.html`. On Windows, set `PYTHONUTF8=1` first; `money_loop.py` prints arrows the default console codepage cannot encode.
+Or run the scripts in order: `pull_data.py`, `figures.py`, `money_loop.py`, `btos.py`. `build_notebook.py` regenerates the notebook from the scripts, and `build_dashboard.py` regenerates `docs/index.html`.
+
+`explore.ipynb` is a scratch notebook that loads every dataset into a DataFrame and gives helpers to re-cut them: what-ifs on the loop (drop an edge, count conditional rows), capex and segment tables and plots for any tickers, indexed price paths, a break-even sweep, and guarded functions to append a sourced row to `deals.csv` or `segment_revenue.csv`. `build_explore.py` regenerates it; nothing in the figures or the write-up depends on it. On Windows, set `PYTHONUTF8=1` first; `money_loop.py` prints arrows the default console codepage cannot encode.
 
 The Census workbook is fetched from `https://www.census.gov/hfp/btos/downloads/National.xlsx`. A copy is kept in `raw/` in case the download path changes.
 
@@ -54,7 +56,7 @@ The Census workbook is fetched from `https://www.census.gov/hfp/btos/downloads/N
 
 Cycle dollars are the sum of edge amounts that sit on at least one simple cycle (`networkx.simple_cycles`). `figures/table_cycles.csv` lists every cycle.
 
-## Caveats
+## Limitations
 
 - Yahoo's statement labels are not GAAP line items. Meta's Q3 2026 capex is $33.9bn on Yahoo and $34.9bn in the 8-K; the difference is finance-lease principal. Check any number you quote against the filing linked in `deals.csv`.
 - Yahoo's "Total Debt" line includes operating and finance lease liabilities. For CoreWeave at June 30, 2026 the 10-Q shows $35.1bn of recourse and non-recourse debt, $0.2bn of finance leases and $16.3bn of operating leases, which sum to Yahoo's $51.6bn. Figure 3 and `table_neocloud_coverage.csv` use the Yahoo figure and label it debt plus lease liabilities.
