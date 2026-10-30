@@ -1,5 +1,28 @@
 {
-  "pulled_utc": "2026-10-30T21:03+00:00",
+  "pulled_utc": "2026-10-30T23:27+00:00",
   "source": "Yahoo Finance via yfinance",
-  "note": "Statement line items as labeled by Yahoo; verify against 10-Q/10-K before quoting."
+  "note": "Statement line items as labeled by Yahoo; verify against 10-Q/10-K before quoting.",
+  "sec_fill": {
+    "pulled_utc": "2026-10-30T23:27+00:00",
+    "rows": [
+      {
+        "ticker": "AMZN",
+        "quarter": "2026-06-30",
+        "capex": 54.208,
+        "ocf": 45.387
+      },
+      {
+        "ticker": "AMZN",
+        "quarter": "2026-09-30",
+        "capex": 77.259,
+        "ocf": 42.422
+      }
+    ],
+    "tags": {
+      "AMZN": [
+        "NetCashProvidedByUsedInOperatingActivities",
+        "PaymentsToAcquireProductiveAssets"
+      ]
+    }
+  }
 }

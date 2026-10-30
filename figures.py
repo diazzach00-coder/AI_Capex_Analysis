@@ -17,13 +17,16 @@ def qlabel(ts): ts = pd.Timestamp(ts); return f"{ts.year % 100:02d}Q{(ts.month -
 # ---------- Figure 1: capex vs free cash flow, small multiples ----------
 h = pd.read_csv(D / "hyperscaler_cashflow.csv", parse_dates=["quarter"])
 h = h[h.quarter >= "2025-01-01"].dropna(subset=["capex", "fcf"])
+if "source" not in h.columns: h["source"] = "yahoo"
 NAMES = {"MSFT": "Microsoft", "GOOGL": "Alphabet", "AMZN": "Amazon", "META": "Meta"}
 fig, axes = plt.subplots(1, 4, figsize=(13, 4.2), sharey=True)
 ymax = h.capex.max() * 1.15
 for ax, t in zip(axes, NAMES):
     d = h[h.ticker == t].reset_index(drop=True)
     x = np.arange(len(d))
-    ax.bar(x, d.capex, width=0.62, color=C[t], alpha=0.35, linewidth=0, label="Capex")
+    bars = ax.bar(x, d.capex, width=0.62, color=C[t], alpha=0.35, linewidth=0, label="Capex")
+    for b, src in zip(bars, d.source):  # quarters filled from SEC XBRL are hatched
+        if src == "sec": b.set_hatch("///"); b.set_edgecolor(C[t]); b.set_linewidth(0)
     ax.plot(x, d.fcf, color=C["ink"], lw=2, marker="o", ms=5, label="Free cash flow")
     neg = d.fcf < 0
     ax.scatter(x[neg], d.fcf[neg], color=C["neg"], s=60, zorder=5)
@@ -38,8 +41,10 @@ axes[0].legend(frameon=False, loc="upper left", fontsize=9)
 fig.suptitle("Capex has outrun free cash flow", x=0.01, ha="left", fontsize=14, fontweight="bold", color=C["ink"])
 fig.text(0.01, 0.90, "Quarterly capital expenditure (bars) and free cash flow (line); red = negative FCF quarter",
          color=C["ink2"], fontsize=10)
-fig.text(0.01, 0.005, f"Source: company cash-flow statements via Yahoo Finance, pulled {META}. Amazon Q2 and Q3 2026 absent from feed.",
-         color=C["muted"], fontsize=8)
+sec_rows = h[h.source == "sec"]
+sec_note = (" Hatched: " + ", ".join(f"{NAMES[r.ticker]} {qlabel(r.quarter)}" for r in sec_rows.itertuples())
+            + " from 10-Q XBRL (operating cash flow minus purchases of property and equipment), absent from the Yahoo feed.") if len(sec_rows) else ""
+fig.text(0.01, 0.005, f"Source: company cash-flow statements via Yahoo Finance, pulled {META}.{sec_note}", color=C["muted"], fontsize=8)
 fig.tight_layout(rect=(0, 0.03, 1, 0.88)); fig.savefig(F / "fig1_capex_vs_fcf.png", dpi=180); plt.close()
 print("fig1 written; quarters per ticker:", h.groupby("ticker").quarter.max().dt.date.to_dict())
 

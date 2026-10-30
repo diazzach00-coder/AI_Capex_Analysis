@@ -16,7 +16,7 @@ cells = [
 nbf.v4.new_markdown_cell("""# The AI money loop
 **QFE 5335, Module 3 discussion. Zach Diaz.**
 
-The AI buildout is financed in a loop, and the loop is not yet earning its keep. The four largest hyperscalers guide to $735bn of capital expenditure in 2026, three of them have printed a negative free-cash-flow quarter since the start of 2025, and $468bn of the $610bn in announced commitments with a public dollar figure sits on a closed loop, where the money returns to whoever sent it. Adoption is broad, with 24.6% of US employer firms using AI, but the cloud and ad segments the capex was built for added $148bn of revenue over their latest four quarters against $531bn of capex.
+The AI buildout is financed in a loop, and the loop is not yet earning its keep. The four largest hyperscalers guide to $735bn of capital expenditure in 2026, three of them have printed a negative free-cash-flow quarter since the start of 2025, and $468bn of the $610bn in announced commitments with a public dollar figure sits on a closed loop, where the money returns to whoever sent it. Adoption is broad, with 24.6% of US employer firms using AI, but the cloud and ad segments the capex was built for added $162bn of revenue over their latest four quarters against $595bn of capex.
 
 Five pieces of evidence, each from a dataset pulled or hand-entered in this notebook:
 1. Hyperscaler capex vs. free cash flow (company cash-flow statements)
@@ -26,10 +26,11 @@ Five pieces of evidence, each from a dataset pulled or hand-entered in this note
 5. Cloud and ad segment revenue against capex (8-K earnings exhibits), shown in the dashboard at `docs/index.html`
 
 Data sources and pull dates are printed in each section. Figures are saved to `figures/`. The discussion questions are answered in section 5."""),
-nbf.v4.new_markdown_cell("## 0. Data pull\nStatement line items come from Yahoo Finance via `yfinance`. Yahoo's labels are not GAAP line items; the notebook spot-checks Q3 2026 capex against the 8-Ks in `data/deals.csv` (rows with type `capex_actual`)."),
+nbf.v4.new_markdown_cell("## 0. Data pull\nStatement line items come from Yahoo Finance via `yfinance`. Yahoo's labels are not GAAP line items; the notebook spot-checks Q3 2026 capex against the 8-Ks in `data/deals.csv` (rows with type `capex_actual`).\n\nQuarters the Yahoo feed lacks are filled from SEC XBRL with the two tags Yahoo itself reads (operating cash flow and purchases of property and equipment), so the definition is the same. Amazon's Q1 2026 matches to the million on both lines. Filled rows are marked `source=sec` and hatched in figure 1. The SEC API requires a contact in the User-Agent: set `SEC_CONTACT` to a name and email before running, or the cell leaves the Yahoo rows as they are."),
 nbf.v4.new_code_cell(code("pull_data.py")),
+nbf.v4.new_code_cell(code("pull_sec.py")),
 nbf.v4.new_markdown_cell("""## 1. Capex has outrun free cash flow
-The spend has outrun the cash that funds it. Alphabet reported $51.4bn of capital expenditure for the third quarter of 2026, Microsoft $45.2bn and Meta $34.9bn, and the four companies together guide to $735bn for the year: Amazon $220bn, Alphabet $200bn, Microsoft $175bn, Meta $140bn. Amazon's free cash flow was negative $18.2bn in the first quarter of 2026, Alphabet's negative $5.9bn in the second and negative $9.1bn in the third, and Meta's negative $1.2bn in the third, so the capex is now paid for from balance sheets and borrowing rather than from operations. Microsoft has not printed a negative quarter. Amazon's Q2 and Q3 2026 are missing from Yahoo's feed."""),
+The spend has outrun the cash that funds it. Amazon reported $77.3bn of capital expenditure for the third quarter of 2026, Alphabet $51.4bn, Microsoft $45.2bn and Meta $34.9bn, and the four companies together guide to $735bn for the year: Amazon $220bn, Alphabet $200bn, Microsoft $175bn, Meta $140bn. Amazon's free cash flow was negative in all three quarters of 2026 so far, $18.2bn, $8.8bn and $34.8bn; Alphabet's was negative $5.9bn in the second quarter and $9.1bn in the third, and Meta's negative $1.2bn in the third, so the capex is now paid for from balance sheets and borrowing rather than from operations. Microsoft has not printed a negative quarter. Amazon's Q2 and Q3 2026 come from its 10-Qs, since the Yahoo feed lacks them; the bars are hatched."""),
 nbf.v4.new_code_cell(code("figures.py").split("# ---------- Figure 3")[0]),
 nbf.v4.new_markdown_cell("""## 2. The money loop
 `data/deals.csv` has one row per announced commitment with a source URL and a quote from that page. Rows marked `unverified` (anonymous-sourced press reports only, e.g. OpenAI→Oracle $300bn) or `conditional` (announced but contingent, e.g. the $35bn second tranche of Amazon's OpenAI investment) never enter the graph. Four editorial exclusions are stated in the code.
@@ -52,7 +53,7 @@ nbf.v4.new_code_cell(code("btos.py")),
 nbf.v4.new_markdown_cell("""## 5. Discussion
 
 ### Why the topic matters in financial markets
-The spend has outrun the cash that funds it, the borrowing has moved to the companies least able to carry it, and the money is circular. Alphabet, Microsoft and Meta reported $131.5bn of capital expenditure between them for the third quarter of 2026, three of the four hyperscalers have printed a negative free-cash-flow quarter since 2025, and $468bn of $610bn in announced commitments sits on a closed loop. These companies are the largest weights in the S&P 500, so the question of whether this spend earns a return is a question about the index itself.
+The spend has outrun the cash that funds it, the borrowing has moved to the companies least able to carry it, and the money is circular. The four hyperscalers reported $208.8bn of capital expenditure between them for the third quarter of 2026, three of them have printed a negative free-cash-flow quarter since 2025, and $468bn of $610bn in announced commitments sits on a closed loop. These companies are the largest weights in the S&P 500, so the question of whether this spend earns a return is a question about the index itself.
 
 ### Relevance to investors and regulators
 For investors, a backlog funded by the vendor's own investment deserves a lower multiple than one funded by outside customers, and the neocloud balance sheets set the credit question: $76bn of debt plus leases, none of it covered by operating income.
@@ -64,18 +65,18 @@ Module 3 covers the risk and return of portfolios and the S&P 500. Portfolio var
 
 The neocloud price paths show the levered end of the same bet. Indexed to CoreWeave's listing in March 2025, IREN and Nebius rose above 1,000 before giving back most of the gain, while Nvidia moved inside a far narrower band. Same factor, different leverage, different variance.
 
-The break-even calculator in the dashboard turns the capex into a required return. At a $735bn annual run-rate, a five-year useful life, a 10% required return and a 30% operating margin, the AI business must add $735bn of revenue a year to stand still. The four cloud and ad segments added $148bn over their latest four quarters. The gap is the expected-return assumption the market is making, and the width of the outcomes around it is the risk the module asks us to price.
+The break-even calculator in the dashboard turns the capex into a required return. At a $735bn annual run-rate, a five-year useful life, a 10% required return and a 30% operating margin, the AI business must add $735bn of revenue a year to stand still. The four cloud and ad segments added $162bn over their latest four quarters. The gap is the expected-return assumption the market is making, and the width of the outcomes around it is the risk the module asks us to price.
 
 ### How the data ties to the discussion
 Five datasets carry the argument, each pulled or hand-entered in this notebook with its source and pull date.
 
 | Dataset | What it shows | Limitations |
 | --- | --- | --- |
-| Hyperscaler cash flows (Yahoo Finance via yfinance) | Capex has outrun free cash flow; three of four printed a negative FCF quarter since 2025 | Yahoo labels are not GAAP lines. Meta's Q3 2026 capex is $33.9bn on Yahoo and $34.9bn in the 8-K; the gap is finance-lease principal. Amazon's Q2 and Q3 2026 are missing from the feed |
+| Hyperscaler cash flows (Yahoo Finance via yfinance) | Capex has outrun free cash flow; three of four printed a negative FCF quarter since 2025 | Yahoo labels are not GAAP lines. Meta's Q3 2026 capex is $33.9bn on Yahoo and $34.9bn in the 8-K; the gap is finance-lease principal. Amazon's Q2 and Q3 2026 are filled from the 10-Q XBRL tags Yahoo reads, since the feed lacks them |
 | Deal table (`data/deals.csv`, 50 rows, one URL and quote each) | $468bn of $610bn in announced commitments sits on a closed loop, 77% | Amounts are headline sizes, not cash transferred. Commitments with no dollar figure carry zero weight, so the loop share is a lower bound. Anonymous-sourced reports such as OpenAI to Oracle at $300bn stay out |
 | Neocloud financials (Yahoo Finance) | Debt plus leases of $76bn across four companies, all with negative operating income | Yahoo's "Total Debt" includes operating leases; CoreWeave's $51.6bn splits into $35.1bn of borrowings and $16.5bn of leases per the 10-Q |
 | Census BTOS, national workbook | AI use among US employer firms rose from 17.3% in November 2025 to 24.6% in October 2026; 28.6% expect to use it within six months | Counts firms, not dollars. The question was reworded in November 2025, so earlier readings do not compare |
-| Segment revenue (`data/segment_revenue.csv`, 8-K exhibits) | New segment revenue per dollar of capex over the latest four quarters: Amazon 0.17, Alphabet 0.25, Microsoft 0.27, Meta 0.49 | Capex is company-wide, segment revenue is one segment, and both include non-AI activity. Meta's Family of Apps operating income fell $1.9bn over the window. Microsoft's series stops at June 2026 when it retired the Intelligent Cloud segment |
+| Segment revenue (`data/segment_revenue.csv`, 8-K exhibits) | New segment revenue per dollar of capex over the latest four quarters: Amazon 0.18, Alphabet 0.25, Microsoft 0.27, Meta 0.49 | Capex is company-wide, segment revenue is one segment, and both include non-AI activity. Meta's Family of Apps operating income fell $1.9bn over the window. Microsoft's series stops at June 2026 when it retired the Intelligent Cloud segment |
 
 Each number in the text above comes from one of these rows, and each row links to the filing or release it came from."""),
 ]
