@@ -14,6 +14,18 @@ A data-driven discussion post for QFE 5335 (Financial Analytics, Texas State Uni
 | 4 | Adoption is broad and rising, but it is a usage count, not a revenue line. | US Census Bureau, Business Trends and Outlook Survey, national workbook | `fig4_btos_adoption.png` |
 | 5 | The capex is not yet earning at the pace of the spend. New cloud or ad segment revenue per dollar of capex, trailing four quarters, runs from 0.17 (Amazon) to 0.49 (Meta). | `data/segment_revenue.csv`: segment revenue and operating income from each company's 8-K earnings exhibit, one URL and quote per row | `docs/index.html` |
 
+## Figures
+
+![Capex has outrun free cash flow: quarterly capex and free cash flow for Microsoft, Alphabet, Amazon and Meta](figures/fig1_capex_vs_fcf.png)
+
+![The AI money loop: announced commitments drawn as a directed graph, with closed loops highlighted](figures/fig2_money_loop.png)
+
+![Neoclouds: debt plus lease liabilities against annualized revenue for CoreWeave, Nebius, IREN and Applied Digital](figures/fig3_neocloud_debt.png)
+
+![Neocloud and Nvidia share prices indexed to CoreWeave's listing date](figures/fig3b_neocloud_prices.png)
+
+![Share of US employer firms using AI, Census Bureau BTOS](figures/fig4_btos_adoption.png)
+
 ## Dashboard
 
 `docs/index.html` follows the announced money from the party that pays, to the party that receives, to its fate: round trip (on a closed loop), carried as neocloud debt, or one-way. It adds the capex-versus-segment-revenue test, the neocloud debt table, the adoption series, and a break-even calculator: required new annual revenue = capex run-rate × (1 / useful life + required return) ÷ operating margin, set against the new segment revenue visible today. The page is one self-contained file with no external scripts, built by `build_dashboard.py` from the same CSVs the notebook writes, so it can be served from GitHub Pages.
