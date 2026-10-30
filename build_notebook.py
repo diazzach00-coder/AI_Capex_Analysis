@@ -8,6 +8,7 @@ def code(path, strip_imports=True):
         src = re.sub(r"^from figures import.*\n", "", src, flags=re.M)
         src = src.replace('ROOT = pathlib.Path(__file__).parent', 'ROOT = pathlib.Path.cwd()')
         src = src.replace('pathlib.Path(__file__).parent', 'pathlib.Path.cwd()')
+        src = src.replace('plt.close()', 'plt.show()')  # scripts save and close; the notebook also displays inline
     return src
 
 nb = nbf.v4.new_notebook()
