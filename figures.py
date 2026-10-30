@@ -38,7 +38,7 @@ axes[0].legend(frameon=False, loc="upper left", fontsize=9)
 fig.suptitle("Capex has outrun free cash flow", x=0.01, ha="left", fontsize=14, fontweight="bold", color=C["ink"])
 fig.text(0.01, 0.90, "Quarterly capital expenditure (bars) and free cash flow (line); red = negative FCF quarter",
          color=C["ink2"], fontsize=10)
-fig.text(0.01, 0.005, f"Source: company cash-flow statements via Yahoo Finance, pulled {META}. Amazon Q2 2026 absent from feed.",
+fig.text(0.01, 0.005, f"Source: company cash-flow statements via Yahoo Finance, pulled {META}. Amazon Q2 and Q3 2026 absent from feed.",
          color=C["muted"], fontsize=8)
 fig.tight_layout(rect=(0, 0.03, 1, 0.88)); fig.savefig(F / "fig1_capex_vs_fcf.png", dpi=180); plt.close()
 print("fig1 written; quarters per ticker:", h.groupby("ticker").quarter.max().dt.date.to_dict())

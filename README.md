@@ -58,9 +58,9 @@ Cycle dollars are the sum of edge amounts that sit on at least one simple cycle 
 
 ## Limitations
 
-- Yahoo's statement labels are not GAAP line items. Meta's Q3 2026 capex is $33.9bn on Yahoo and $34.9bn in the 8-K; the difference is finance-lease principal. Check any number you quote against the filing linked in `deals.csv`.
+- Yahoo's statement labels are not GAAP line items. Meta's Q3 2026 capex is $33.9bn on Yahoo and $34.9bn in the 8-K, and Microsoft's is $39.4bn on Yahoo and $45.2bn as Microsoft reports it; both differences are finance leases. Check any number you quote against the filing linked in `deals.csv`.
 - Yahoo's "Total Debt" line includes operating and finance lease liabilities. For CoreWeave at June 30, 2026 the 10-Q shows $35.1bn of recourse and non-recourse debt, $0.2bn of finance leases and $16.3bn of operating leases, which sum to Yahoo's $51.6bn. Figure 3 and `table_neocloud_coverage.csv` use the Yahoo figure and label it debt plus lease liabilities.
-- Yahoo's quarterly feed runs about five quarters deep and was missing Amazon's Q2 2026 at the time of the pull.
+- Yahoo's quarterly feed runs about five quarters deep and was missing Amazon's Q2 and Q3 2026 at the time of the pull.
 - The Census AI-use series starts November 2025, when the question was reworded to "any business function". Earlier readings are not comparable.
 - Deal amounts are announced headline sizes, not cash transferred.
 
