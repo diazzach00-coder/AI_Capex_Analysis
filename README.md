@@ -12,6 +12,7 @@ A data-driven discussion post for QFE 5335 (Financial Analytics, Texas State Uni
 | 2 | Most announced AI commitments sit on a closed loop. The largest loops run through the hyperscalers and the labs, not Nvidia. | `data/deals.csv`: one row per commitment, each with a source URL and a quote from that page | `fig2_money_loop.png` |
 | 3 | Neoclouds carry the debt. CoreWeave's debt plus lease liabilities went from $14.6bn to $51.6bn in four quarters; borrowings alone were $35.1bn at June 2026, and operating income was negative in the last three of those quarters. | Quarterly balance sheets and income statements for CRWV, NBIS, IREN, APLD | `fig3_neocloud_debt.png`, `fig3b_neocloud_prices.png` |
 | 4 | Adoption is broad and rising, but it is a usage count, not a revenue line. | US Census Bureau, Business Trends and Outlook Survey, national workbook | `fig4_btos_adoption.png` |
+| 6 | Five of the largest index weights move together. Daily returns since January 2025 give an average pairwise correlation of 0.43; an equal-weight basket runs at 27% volatility against 16% if uncorrelated, so the covariance term is 62% of its variance. | Adjusted closes (Yahoo Finance via `yfinance`) | `fig5_correlation.png` |
 | 5 | The capex is not yet earning at the pace of the spend. New cloud or ad segment revenue per dollar of capex, trailing four quarters, runs from 0.18 (Amazon) to 0.49 (Meta). | `data/segment_revenue.csv`: segment revenue and operating income from each company's 8-K earnings exhibit, one URL and quote per row | `docs/index.html` |
 
 ## Figures
@@ -26,6 +27,8 @@ A data-driven discussion post for QFE 5335 (Financial Analytics, Texas State Uni
 
 ![Share of US employer firms using AI, Census Bureau BTOS](figures/fig4_btos_adoption.png)
 
+![Daily return correlations among Microsoft, Alphabet, Amazon, Meta and Nvidia, and the rolling average](figures/fig5_correlation.png)
+
 ## Dashboard
 
 `docs/index.html` follows the announced money from the party that pays, to the party that receives, to its fate: round trip (on a closed loop), carried as neocloud debt, or one-way. It adds the capex-versus-segment-revenue test, the neocloud debt table, the adoption series, and a break-even calculator: required new annual revenue = capex run-rate × (1 / useful life + required return) ÷ operating margin, set against the new segment revenue visible today. The page is one self-contained file with no external scripts, built by `build_dashboard.py` from the same CSVs the notebook writes, so it can be served from GitHub Pages.
@@ -37,7 +40,7 @@ pip install -r requirements.txt
 jupyter nbconvert --to notebook --execute --inplace ai_money_loop.ipynb
 ```
 
-Or run the scripts in order: `pull_data.py`, `pull_sec.py`, `figures.py`, `money_loop.py`, `btos.py`. `pull_sec.py` fills quarters the Yahoo feed lacks from SEC XBRL and needs `SEC_CONTACT` set to a name and email (the SEC requires one in the User-Agent); without it the script leaves the Yahoo rows unchanged. `build_notebook.py` regenerates the notebook from the scripts, and `build_dashboard.py` regenerates `docs/index.html`.
+Or run the scripts in order: `pull_data.py`, `pull_sec.py`, `figures.py`, `money_loop.py`, `btos.py`, `portfolio.py`. `pull_sec.py` fills quarters the Yahoo feed lacks from SEC XBRL and needs `SEC_CONTACT` set to a name and email (the SEC requires one in the User-Agent); without it the script leaves the Yahoo rows unchanged. `build_notebook.py` regenerates the notebook from the scripts, and `build_dashboard.py` regenerates `docs/index.html`.
 
 `explore.ipynb` is a scratch notebook that loads every dataset into a DataFrame and gives helpers to re-cut them: what-ifs on the loop (drop an edge, count conditional rows), capex and segment tables and plots for any tickers, indexed price paths, a break-even sweep, and guarded functions to append a sourced row to `deals.csv` or `segment_revenue.csv`. `build_explore.py` regenerates it; nothing in the figures or the write-up depends on it. On Windows, set `PYTHONUTF8=1` first; `money_loop.py` prints arrows the default console codepage cannot encode.
 

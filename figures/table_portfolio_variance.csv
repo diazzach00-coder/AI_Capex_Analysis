@@ -1,0 +1,11 @@
+,0
+window_start,2025-01-03
+window_end,2026-10-29
+trading_days,457
+avg_pairwise_corr_five,0.425
+min_pairwise_corr_five,0.282
+avg_corr_with_spy,0.609
+basket_vol_annual,0.27
+basket_vol_if_uncorrelated,0.165
+covariance_share_of_variance,0.624
+effective_n_assets,1.88

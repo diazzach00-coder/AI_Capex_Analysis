@@ -1,10 +1,10 @@
 cycle,n_edges,unquantified_edges,min_quantified_edge_bn,sum_edges_bn
-OpenAI → Microsoft → Anthropic → Amazon → OpenAI,4,0,5.0,370.0
+Amazon → OpenAI → Microsoft → Anthropic → Amazon,4,0,5.0,370.0
 OpenAI → Microsoft → OpenAI,2,0,11.8,261.8
-OpenAI → Nvidia → Anthropic → Amazon → OpenAI,4,1,10.0,125.0
-Anthropic → Amazon → Anthropic,2,0,13.0,113.0
-OpenAI → Nvidia → Anthropic → Microsoft → OpenAI,4,1,10.0,51.8
-Microsoft → Anthropic → Microsoft,2,0,5.0,35.0
-OpenAI → Nvidia → OpenAI,2,1,30.0,30.0
+Amazon → OpenAI → Nvidia → Anthropic → Amazon,4,1,10.0,125.0
+Amazon → Anthropic → Amazon,2,0,13.0,113.0
+Nvidia → Anthropic → Microsoft → OpenAI → Nvidia,4,1,10.0,51.8
+Anthropic → Microsoft → Anthropic,2,0,5.0,35.0
+Nvidia → OpenAI → Nvidia,2,1,30.0,30.0
 Nvidia → Meta → Nvidia,2,1,3.0,3.0
 OpenAI → AMD → OpenAI,2,2,0.0,0.0

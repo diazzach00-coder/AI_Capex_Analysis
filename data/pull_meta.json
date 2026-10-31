@@ -1,9 +1,9 @@
 {
-  "pulled_utc": "2026-10-30T23:27+00:00",
+  "pulled_utc": "2026-10-31T00:54+00:00",
   "source": "Yahoo Finance via yfinance",
   "note": "Statement line items as labeled by Yahoo; verify against 10-Q/10-K before quoting.",
   "sec_fill": {
-    "pulled_utc": "2026-10-30T23:27+00:00",
+    "pulled_utc": "2026-10-31T00:54+00:00",
     "rows": [
       {
         "ticker": "AMZN",
